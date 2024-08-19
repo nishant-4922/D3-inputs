@@ -1,0 +1,33 @@
+import streamlit as st
+import streamlit.components.v1 as components
+
+# Initialize session state for navigation
+if "navigate_to" not in st.session_state:
+    st.session_state.navigate_to = "HOME"
+
+# Define the menu
+menu = ["HOME", "D3 Output"]
+
+# Main menu
+choice = st.sidebar.selectbox("Menu", menu, index=menu.index(st.session_state.navigate_to))
+
+# Home Page
+if choice == "HOME":
+    st.title("Home")
+    st.write("This page contains descriptions of different functions.")
+    
+    st.subheader("Function 1")
+    st.write("Description of Function 1")
+    
+    if st.button("Go to D3 Output"):
+        st.session_state.navigate_to = "D3 Output"
+
+# D3 Output Page
+if choice == "D3 Output":
+    st.title("D3 Output")
+    
+    # Load the D3 visualization
+    with open("index.html", 'r') as f:
+        html_content = f.read()
+    
+    components.html(html_content, height=600, scrolling=True)
